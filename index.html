@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IRONLOG">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>IRONLOG — Workout Tracker</title>
+<style>
+:root{color-scheme:dark;--bg:#080808;--panel:#121212;--panel2:#191919;--line:#292929;--muted:#8b8b8b;--white:#f5f5f5;--soft:#c9c9c9;--accent:#fff;--green:#a8f0bd}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 0 calc(84px + env(safe-area-inset-bottom));letter-spacing:.01em}
+button,input,select{font:inherit}button{cursor:pointer;color:inherit} .app{max-width:760px;margin:auto;padding:18px 16px 24px}
+header{display:flex;align-items:center;justify-content:space-between;margin:4px 0 22px}.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;background:#f5f5f5;color:#080808;border-radius:12px;display:grid;place-items:center;font-weight:950;font-size:18px;letter-spacing:-2px}.brandname{font-weight:900;letter-spacing:.15em;font-size:15px}.subbrand{font-size:10px;color:var(--muted);letter-spacing:.15em;margin-top:3px}.iconbtn{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:10px 12px}
+h1{font-size:29px;line-height:1.1;letter-spacing:-.04em;margin:0 0 7px}h2{font-size:18px;margin:0 0 14px;letter-spacing:-.02em}.muted{color:var(--muted)}.small{font-size:12px}.eyebrow{font-size:10px;letter-spacing:.16em;color:var(--muted);font-weight:750;text-transform:uppercase;margin-bottom:9px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:#101010;padding:5px;border:1px solid var(--line);border-radius:14px;margin:0 0 22px}.tab{border:0;border-radius:10px;background:transparent;color:var(--muted);padding:11px 5px;font-weight:700;font-size:13px}.tab.active{background:#f4f4f4;color:#080808}
+.hero{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-bottom:20px}.weeknav{display:flex;gap:7px;align-items:center}.weeknav button{border:1px solid var(--line);background:var(--panel);border-radius:10px;width:35px;height:35px}.weeklabel{font-size:12px;color:var(--muted);min-width:75px;text-align:center}
+.weekgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:18px}.day{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px 2px 9px;text-align:center;min-width:0}.day.selected{background:#f4f4f4;color:#080808;border-color:#f4f4f4}.day .dow{font-size:10px;font-weight:800;opacity:.65}.day .date{font-size:17px;font-weight:850;margin:7px 0}.dot{width:4px;height:4px;border-radius:50%;background:currentColor;margin:0 auto;opacity:.7}.day.selected .dot{background:#080808}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}.cardhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.pill{font-size:11px;padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--soft)}.btn{border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:11px 14px;font-weight:750;font-size:13px}.btn.primary{background:#f4f4f4;color:#080808;border-color:#f4f4f4}.btn.ghost{background:transparent}.btn.danger{color:#ff9c9c}.btn.full{width:100%}.workout-title{font-size:22px;font-weight:850;letter-spacing:-.04em;margin-bottom:4px}.exercise{border-top:1px solid var(--line);padding:15px 0 2px}.exercise:first-child{border-top:0;padding-top:0}.exercise-head{display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:11px}.exname{font-weight:800;font-size:15px}.exmeta{font-size:11px;color:var(--muted);margin-top:4px}.sets-head,.setrow{display:grid;grid-template-columns:30px 1fr 1fr 34px;gap:7px;align-items:center}.sets-head{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:0 0 7px}.setrow{margin-bottom:7px}.setnum{font-size:12px;color:var(--muted);text-align:center}.field{min-width:0;width:100%;background:#0a0a0a;border:1px solid #2b2b2b;color:#fff;border-radius:9px;padding:10px 8px;outline:none}.field:focus{border-color:#eee}.field::placeholder{color:#606060}.checkset{width:32px;height:36px;border:1px solid var(--line);background:#0b0b0b;border-radius:9px;display:grid;place-items:center;color:var(--muted)}.checkset.done{background:#f5f5f5;color:#080808;border-color:#f5f5f5}.exercise-actions{display:flex;gap:7px;margin-top:9px}.exercise-actions .btn{padding:8px 10px;font-size:11px}.empty{text-align:center;padding:27px 15px}.empty .symbol{font-size:30px;margin-bottom:10px}.empty p{color:var(--muted);font-size:13px;line-height:1.5}.fieldlabel{font-size:11px;color:var(--muted);display:block;margin:12px 0 6px}.formrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formrow .field{width:100%}.listrow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}.listrow:first-child{border-top:0}.metric{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px}.metric .value{font-size:24px;font-weight:900;letter-spacing:-.04em}.metric .label{font-size:11px;color:var(--muted);margin-top:5px}.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:15px}.bottomnav{position:fixed;bottom:0;left:0;right:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(8,8,8,.94);backdrop-filter:blur(18px);border-top:1px solid #222;display:flex;justify-content:center;z-index:5}.bottominner{width:100%;max-width:760px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.navbtn{background:transparent;border:0;color:var(--muted);border-radius:12px;padding:8px 2px;font-size:10px;font-weight:700}.navbtn .navicon{display:block;font-size:19px;margin-bottom:4px}.navbtn.active{color:#fff;background:#171717}.notice{font-size:11px;color:var(--muted);line-height:1.5;margin-top:14px}.historyitem{padding:14px 0;border-top:1px solid var(--line)}.historyitem:first-child{border-top:0}.historytop{display:flex;justify-content:space-between;gap:10px}.historyname{font-weight:800}.historydetail{font-size:12px;color:var(--muted);margin-top:5px}.barwrap{height:5px;background:#272727;border-radius:8px;margin-top:10px;overflow:hidden}.bar{height:100%;background:#eee;border-radius:8px}.modalback{position:fixed;inset:0;background:#000b;z-index:10;display:flex;align-items:end;justify-content:center}.modal{width:100%;max-width:600px;background:#111;border:1px solid #333;border-radius:22px 22px 0 0;padding:22px 18px calc(24px + env(safe-area-inset-bottom));max-height:90vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modalhead h2{margin:0}.hidden{display:none!important}
+@media(min-width:600px){.app{padding:28px 24px}.bottomnav{padding-left:24px;padding-right:24px}.day{padding:13px 4px}.day .date{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><div class="logo">IL</div><div><div class="brandname">IRONLOG</div><div class="subbrand">YOUR WORK. YOUR PROGRESS.</div></div></div><button class="iconbtn" id="settingsBtn" aria-label="Settings">⚙</button></header>
+<main id="main"></main>
+</div>
+<nav class="bottomnav"><div class="bottominner">
+<button class="navbtn active" data-page="today"><span class="navicon">▦</span>WORKOUT</button>
+<button class="navbtn" data-page="schedule"><span class="navicon">▤</span>SCHEDULE</button>
+<button class="navbtn" data-page="progress"><span class="navicon">↗</span>PROGRESS</button>
+</div></nav>
+<div id="modalroot"></div>
+<script>
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const SHORT=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+const KEY='ironlog-v1';
+const blank=()=>({schedule:Array.from({length:7},()=>({name:'Rest Day',exercises:[]})),history:[],units:'lb',weekOffset:0});
+let data=load(),page='today',selectedDay=new Date().getDay(),activeDate=dateKey(new Date()),currentSession=null;
+function load(){try{return {...blank(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){return blank()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function parseDate(s){let [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
+function addDays(d,n){let x=new Date(d);x.setDate(x.getDate()+n);return x}
+function weekStart(date,offset=0){let d=new Date(date);d.setDate(d.getDate()-d.getDay()+offset*7);d.setHours(0,0,0,0);return d}
+function weekDates(){let start=weekStart(new Date(),data.weekOffset||0);return Array.from({length:7},(_,i)=>addDays(start,i))}
+function routine(day=selectedDay){return data.schedule[day]}
+function sessionFor(date){return data.history.find(h=>h.date===date)}
+function ensureSession(date,day){let s=sessionFor(date);if(!s){s={id:Date.now().toString(),date,day,name:data.schedule[day].name,exercises:data.schedule[day].exercises.map(e=>({...e,sets:e.sets.map(st=>({...st,done:false,actualWeight:st.weight,actualReps:st.reps}))})),completed:false};data.history.unshift(s);save()}return s}
+function fmtDate(s){return parseDate(s).toLocaleDateString(undefined,{month:'short',day:'numeric'})}
+function vol(session){return session.exercises.reduce((sum,e)=>sum+e.sets.filter(s=>s.done).reduce((a,s)=>a+(+s.actualWeight||0)*(+s.actualReps||0),0),0)}
+function totalDone(session){return session.exercises.reduce((a,e)=>a+e.sets.filter(s=>s.done).length,0)}
+function totalSets(session){return session.exercises.reduce((a,e)=>a+e.sets.length,0)}
+function setPage(p){page=p;document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===p));render()}
+document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>setPage(b.dataset.page));
+document.getElementById('settingsBtn').onclick=showSettings;
+function render(){const main=document.getElementById('main');if(page==='today')main.innerHTML=renderToday();else if(page==='schedule')main.innerHTML=renderSchedule();else main.innerHTML=renderProgress();wire()}
+function renderWeek(){let dates=weekDates();return `<div class="weeknav"><button id="prevWeek">‹</button><div class="weeklabel">${fmtDate(dateKey(dates[0]))} – ${fmtDate(dateKey(dates[6]))}</div><button id="nextWeek">›</button></div>`}
+function dayGrid(){let dates=weekDates();return `<div class="weekgrid">${dates.map((d,i)=>`<button class="day ${i===selectedDay?'selected':''}" data-day="${i}"><div class="dow">${SHORT[i]}</div><div class="date">${d.getDate()}</div><div class="dot" style="opacity:${data.schedule[i].exercises.length?1:0}"></div></button>`).join('')}</div>`}
+function renderToday(){
+ let dates=weekDates(),date=dateKey(dates[selectedDay]),r=routine(),s=sessionFor(date);
+ return `<div class="hero"><div><div class="eyebrow">YOUR TRAINING WEEK</div><h1>Let’s get to work.</h1><div class="small muted">Build consistency. Track every rep.</div></div>${renderWeek()}</div>${dayGrid()}
+ <section class="card"><div class="cardhead"><div><div class="eyebrow">${DAYS[selectedDay]} · ${fmtDate(date)}</div><div class="workout-title">${esc(r.name||'Workout')}</div><div class="small muted">${r.exercises.length} exercises · ${r.exercises.reduce((a,e)=>a+e.sets.length,0)} planned sets</div></div><span class="pill">${s&&s.completed?'COMPLETED':r.exercises.length?'PLANNED':'REST DAY'}</span></div>
+ ${!r.exercises.length?`<div class="empty"><div class="symbol">＋</div><h2>${r.name==='Rest Day'?'Take a breather.':'Build this workout.'}</h2><p>Add exercises and set targets for this day. Your schedule stays saved on this device.</p><button class="btn primary" id="editDay">CUSTOMIZE DAY</button></div>`:
+ `<div id="exerciseList">${(s?s.exercises:r.exercises).map((e,ei)=>renderExercise(e,ei,!!s)).join('')}</div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn primary full" id="startBtn">${s?'RESUME WORKOUT':'START WORKOUT'}</button><button class="btn" id="editDay">EDIT</button></div>`}
+ </section><div class="notice">Your workouts save automatically on this device. Log actual reps and weight for each set, then check Progress to see your history.</div>`;
+}
+function renderExercise(e,ei,live){
+ return `<div class="exercise" data-ei="${ei}"><div class="exercise-head"><div><div class="exname">${esc(e.name)}</div><div class="exmeta">${e.sets.length} sets · target ${esc(e.sets[0]?.reps||'—')} reps</div></div>${live?`<span class="pill">${e.sets.filter(s=>s.done).length}/${e.sets.length}</span>`:''}</div>
+ <div class="sets-head"><span>SET</span><span>WEIGHT (${data.units})</span><span>REPS</span><span>✓</span></div>
+ ${e.sets.map((st,si)=>`<div class="setrow"><span class="setnum">${si+1}</span><input class="field setweight" inputmode="decimal" type="number" min="0" step="any" placeholder="—" value="${esc(live?(st.actualWeight??st.weight):(st.weight??''))}" data-ei="${ei}" data-si="${si}" aria-label="Set ${si+1} weight"><input class="field setreps" inputmode="numeric" type="number" min="0" step="1" placeholder="—" value="${esc(live?(st.actualReps??st.reps):(st.reps??''))}" data-ei="${ei}" data-si="${si}" aria-label="Set ${si+1} reps"><button class="checkset ${live&&st.done?'done':''}" data-toggle="${ei},${si}" aria-label="Complete set">${live&&st.done?'✓':'○'}</button></div>`).join('')}
+ <div class="exercise-actions"><button class="btn" data-addset="${ei}">＋ ADD SET</button></div></div>`;
+}
+function renderSchedule(){
+ return `<div class="eyebrow">PLAN YOUR WEEK</div><h1>Your schedule.</h1><p class="muted small" style="margin:8px 0 20px">Make every day your own. Tap a day to build or edit its workout.</p>${dayGrid()}
+ <section class="card"><div class="cardhead"><div><div class="eyebrow">${DAYS[selectedDay]}</div><h2 style="margin:0">${esc(routine().name||'Workout')}</h2></div><button class="btn" id="editDay">EDIT DAY</button></div>
+ ${routine().exercises.length?routine().exercises.map((e,i)=>`<div class="listrow"><div><div style="font-weight:750">${esc(e.name)}</div><div class="small muted">${e.sets.length} sets · ${e.sets.map(s=>esc(s.reps)).join('/')} reps · ${e.sets[0]?.weight===''?'No weight set':esc(e.sets[0]?.weight)+' '+data.units}</div></div><span class="muted">↗</span></div>`).join(''):`<div class="empty"><div class="symbol">＋</div><p>No lifts planned yet. Add exercises to make this day yours.</p></div>`}
+ <button class="btn primary full" id="editDay2">${routine().exercises.length?'CUSTOMIZE EXERCISES':'ADD EXERCISES'}</button></section>
+ <section class="card"><h2>Weekly overview</h2>${data.schedule.map((d,i)=>`<div class="listrow"><div><div style="font-weight:750">${DAYS[i]}</div><div class="small muted">${esc(d.name)}</div></div><div class="pill">${d.exercises.length} lifts</div></div>`).join('')}</section>`;
+}
+function renderProgress(){
+ let sessions=data.history.filter(s=>s.exercises.some(e=>e.sets.some(st=>st.done))),total=sessions.reduce((a,s)=>a+totalDone(s),0),volume=sessions.reduce((a,s)=>a+vol(s),0);
+ let exnames=[...new Set(data.history.flatMap(s=>s.exercises.map(e=>e.name)))];
+ let chartOptions=exnames.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+ return `<div class="eyebrow">THE WORK ADDS UP</div><h1>Your progress.</h1><p class="muted small" style="margin:8px 0 20px">Every rep logged is proof you showed up.</p>
+ <div class="metrics"><div class="metric"><div class="value">${sessions.length}</div><div class="label">WORKOUTS LOGGED</div></div><div class="metric"><div class="value">${total}</div><div class="label">SETS COMPLETED</div></div><div class="metric"><div class="value">${Math.round(volume).toLocaleString()}</div><div class="label">TOTAL VOLUME (${data.units})</div></div><div class="metric"><div class="value">${exnames.length}</div><div class="label">EXERCISES TRACKED</div></div></div>
+ <section class="card"><div class="cardhead"><div><div class="eyebrow">STRENGTH OVER TIME</div><h2 style="margin:0">Exercise progress</h2></div><span class="pill">WEIGHT</span></div>
+ ${exnames.length?`<label class="fieldlabel" for="chartExercise">CHOOSE AN EXERCISE</label><select class="field" id="chartExercise">${chartOptions}</select><div id="exerciseChart" style="margin-top:18px"></div><div class="small muted" style="margin-top:10px">Shows your heaviest completed set for each logged workout. Repeated sessions help reveal progress or plateaus.</div>`:`<div class="empty"><div class="symbol">↗</div><p>Log completed sets for an exercise to start its progress graph.</p></div>`}
+ </section>
+ <section class="card"><div class="cardhead"><h2 style="margin:0">Workout history</h2><span class="pill">${data.history.length} sessions</span></div>${data.history.length?data.history.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(s=>`<div class="historyitem"><div class="historytop"><div><div class="historyname">${esc(s.name||'Workout')}</div><div class="historydetail">${fmtDate(s.date)} · ${totalDone(s)} / ${totalSets(s)} sets · ${s.exercises.length} exercises</div></div><div style="text-align:right;font-weight:800">${Math.round(vol(s)).toLocaleString()}<div class="small muted">${data.units} volume</div></div></div><div class="barwrap"><div class="bar" style="width:${totalSets(s)?Math.min(100,totalDone(s)/totalSets(s)*100):0}%"></div></div></div>`).join(''):`<div class="empty"><div class="symbol">↗</div><h2>Your story starts here.</h2><p>Complete your first workout and your history will show up here.</p></div>`}</section>
+ ${exnames.length?`<section class="card"><h2>Exercise bests</h2>${exnames.map(n=>{let best=0,br=0;data.history.forEach(s=>s.exercises.filter(e=>e.name===n).forEach(e=>e.sets.filter(st=>st.done).forEach(st=>{if(+st.actualWeight>best){best=+st.actualWeight;br=+st.actualReps}})));return `<div class="listrow"><div><div style="font-weight:750">${esc(n)}</div><div class="small muted">Best logged weight</div></div><div style="font-weight:850">${best||'—'} ${best?data.units:''}${best?` <span class="muted small">× ${br}</span>`:''}</div></div>`}).join('')}</section>`:''}
+ <section class="card"><h2>Your data</h2><p class="small muted">Your logs are saved locally in this browser. Export a backup or import one if you change devices.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="exportBtn">EXPORT BACKUP</button><button class="btn" id="importBtn">IMPORT BACKUP</button><button class="btn danger" id="clearBtn">RESET DATA</button></div><input type="file" id="importFile" accept="application/json" class="hidden"></section>`;
+}
+function wire(){
+ document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selectedDay=+b.dataset.day;activeDate=dateKey(weekDates()[selectedDay]);render()});
+ const prev=document.getElementById('prevWeek'),next=document.getElementById('nextWeek');if(prev)prev.onclick=()=>{data.weekOffset=(data.weekOffset||0)-1;save();render()};if(next)next.onclick=()=>{data.weekOffset=(data.weekOffset||0)+1;save();render()};
+ ['editDay','editDay2'].forEach(id=>{let b=document.getElementById(id);if(b)b.onclick=editWorkout});
+ let start=document.getElementById('startBtn');if(start)start.onclick=()=>startWorkout();
+ document.querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>toggleSet(b.dataset.toggle));
+ document.querySelectorAll('[data-addset]').forEach(b=>b.onclick=()=>addSet(+b.dataset.addset));
+ document.querySelectorAll('.setweight,.setreps').forEach(inp=>inp.onchange=()=>updateSetField(+inp.dataset.ei,+inp.dataset.si,inp.classList.contains('setweight')?'weight':'reps',inp.value));
+ let chart=document.getElementById('chartExercise');if(chart){chart.onchange=()=>drawExerciseChart(chart.value);drawExerciseChart(chart.value)}
+ let ex=document.getElementById('exportBtn');if(ex)ex.onclick=exportData;
+ let im=document.getElementById('importBtn');if(im)im.onclick=()=>document.getElementById('importFile').click();
+ let file=document.getElementById('importFile');if(file)file.onchange=importData;
+ let cl=document.getElementById('clearBtn');if(cl)cl.onclick=()=>confirm('Reset all Ironlog data? This cannot be undone.')&&(data=blank(),save(),render());
+}
+function activeSession(){let date=dateKey(weekDates()[selectedDay]);return sessionFor(date)}
+function startWorkout(){let date=dateKey(weekDates()[selectedDay]);let s=ensureSession(date,selectedDay);s.completed=false;save();render();setTimeout(()=>document.getElementById('exerciseList')?.scrollIntoView({behavior:'smooth',block:'start'}),50)}
+function updateSetField(ei,si,field,value){
+ let s=activeSession();if(!s){let date=dateKey(weekDates()[selectedDay]);s=ensureSession(date,selectedDay)}
+ let e=s.exercises[ei];if(!e)return;let st=e.sets[si];if(!st)return;
+ if(field==='weight'){st.actualWeight=value;if(!st.done)st.weight=value}else{st.actualReps=value;if(!st.done)st.reps=value}
+ save();
+}
+function toggleSet(key){let [ei,si]=key.split(',').map(Number);let date=dateKey(weekDates()[selectedDay]),s=sessionFor(date)||ensureSession(date,selectedDay);let st=s.exercises[ei]?.sets[si];if(!st)return;st.done=!st.done;if(st.done){st.actualWeight=st.actualWeight??st.weight;st.actualReps=st.actualReps??st.reps}save();render()}
+function addSet(ei){let date=dateKey(weekDates()[selectedDay]),s=sessionFor(date)||ensureSession(date,selectedDay);let e=s.exercises[ei];if(!e)return;let last=e.sets[e.sets.length-1]||{weight:'',reps:'8'};e.sets.push({weight:last.weight,reps:last.reps,actualWeight:last.actualWeight??last.weight,actualReps:last.actualReps??last.reps,done:false});save();render()}
+function editWorkout(){
+ let r=routine();openModal(`<div class="modalhead"><h2>Customize ${DAYS[selectedDay]}</h2><button class="iconbtn" id="closeModal">✕</button></div><label class="fieldlabel">WORKOUT NAME</label><input class="field" id="routineName" placeholder="e.g. Push Day" value="${esc(r.name==='Rest Day'&&r.exercises.length===0?'Rest Day':r.name)}"><div id="editExercises">${r.exercises.map((e,i)=>editExerciseRow(e,i)).join('')}</div><button class="btn full" id="addExercise" style="margin-top:10px">＋ ADD EXERCISE</button><div style="display:flex;gap:8px;margin-top:18px"><button class="btn primary full" id="saveWorkout">SAVE WORKOUT</button></div><p class="notice">Tip: leave the name as “Rest Day” and remove all lifts for a rest day.</p>`);
+ document.getElementById('closeModal').onclick=closeModal;
+ document.getElementById('addExercise').onclick=()=>{let wrap=document.getElementById('editExercises');wrap.insertAdjacentHTML('beforeend',editExerciseRow({name:'',sets:[{weight:'',reps:'8'}]},wrap.children.length));wireRemoveExercise()};
+ document.getElementById('saveWorkout').onclick=()=>{
+  let name=document.getElementById('routineName').value.trim()||'Workout',rows=[...document.querySelectorAll('.edit-exercise')],exercises=[];
+  for(let row of rows){let nm=row.querySelector('.ename').value.trim();if(!nm)continue;let count=Math.max(1,Math.min(15,parseInt(row.querySelector('.esets').value)||3)),reps=row.querySelector('.ereps').value||'8',weight=row.querySelector('.eweight').value||'';let old=r.exercises.find(e=>e.name.toLowerCase()===nm.toLowerCase());let sets=Array.from({length:count},(_,i)=>old?.sets[i]?{...old.sets[i],reps:reps,weight:weight}:{weight,reps,done:false,actualWeight:weight,actualReps:reps});exercises.push({id:old?.id||Math.random().toString(36).slice(2),name:nm,sets})}
+  data.schedule[selectedDay]={name:exercises.length?name:'Rest Day',exercises};save();closeModal();render();
+ };wireRemoveExercise();
+}
+function editExerciseRow(e,i){return `<div class="edit-exercise card" style="padding:12px;margin-top:10px"><div style="display:flex;justify-content:space-between;align-items:center"><span class="small muted">EXERCISE ${i+1}</span><button class="btn danger remove-exercise" type="button">REMOVE</button></div><label class="fieldlabel">EXERCISE NAME</label><input class="field ename" placeholder="e.g. Bench Press" value="${esc(e.name)}"><div class="formrow"><div><label class="fieldlabel">SETS</label><input class="field esets" type="number" min="1" max="15" value="${e.sets.length}"></div><div><label class="fieldlabel">TARGET REPS</label><input class="field ereps" placeholder="8–10" value="${esc(e.sets[0]?.reps||'8')}"></div></div><label class="fieldlabel">STARTING WEIGHT (${data.units})</label><input class="field eweight" type="number" min="0" step="any" placeholder="Optional" value="${esc(e.sets[0]?.weight||'')}"></div>`}
+function wireRemoveExercise(){document.querySelectorAll('.remove-exercise').forEach(b=>b.onclick=()=>b.closest('.edit-exercise').remove())}
+function openModal(content){document.getElementById('modalroot').innerHTML=`<div class="modalback" id="modalback"><div class="modal">${content}</div></div>`;document.getElementById('modalback').onclick=e=>{if(e.target.id==='modalback')closeModal()}}
+function closeModal(){document.getElementById('modalroot').innerHTML=''}
+function showSettings(){openModal(`<div class="modalhead"><h2>Settings</h2><button class="iconbtn" id="closeModal">✕</button></div><label class="fieldlabel">WEIGHT UNIT</label><select id="units" class="field"><option value="lb" ${data.units==='lb'?'selected':''}>Pounds (lb)</option><option value="kg" ${data.units==='kg'?'selected':''}>Kilograms (kg)</option></select><p class="notice">IRONLOG stores your workout data in this browser on this device. Use Export Backup to keep a copy.</p><button class="btn primary full" id="saveSettings" style="margin-top:16px">SAVE SETTINGS</button>`);document.getElementById('closeModal').onclick=closeModal;document.getElementById('saveSettings').onclick=()=>{data.units=document.getElementById('units').value;save();closeModal();render()}}
+function drawExerciseChart(name){
+ const target=document.getElementById('exerciseChart');if(!target)return;
+ const points=[];
+ data.history.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(s=>{
+   let best=null;
+   s.exercises.filter(e=>e.name.toLowerCase()===String(name).toLowerCase()).forEach(e=>{
+     e.sets.filter(st=>st.done&&st.actualWeight!==''&&st.actualWeight!=null&&Number.isFinite(+st.actualWeight)).forEach(st=>{let w=+st.actualWeight;if(best===null||w>best)best=w});
+   });
+   if(best!==null)points.push({date:s.date,weight:best});
+ });
+ if(!points.length){target.innerHTML='<div class="empty"><div class="symbol">↗</div><p>Complete and check off sets for this exercise to build your graph.</p></div>';return}
+ const W=320,H=190,L=39,R=12,T=14,B=34,iw=W-L-R,ih=H-T-B;
+ let min=Math.min(...points.map(p=>p.weight)),max=Math.max(...points.map(p=>p.weight));
+ if(min===max){min=Math.max(0,min-5);max=max+5}else{let pad=(max-min)*.12;min=Math.max(0,min-pad);max+=pad}
+ const x=i=>L+(points.length===1?iw/2:i*iw/(points.length-1));
+ const y=v=>T+(max-v)/(max-min)*ih;
+ const ticks=[0,1,2,3,4].map(i=>min+(max-min)*i/4);
+ const grid=ticks.map(v=>`<line x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}" stroke="#303030" stroke-width="1"/><text x="${L-7}" y="${y(v)+3}" text-anchor="end" fill="#898989" font-size="9">${Number(v.toFixed(1))}</text>`).join('');
+ const line=points.map((p,i)=>(i?'L':'M')+x(i)+','+y(p.weight)).join(' ');
+ const area=`${line} L${x(points.length-1)},${T+ih} L${x(0)},${T+ih} Z`;
+ const dots=points.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.weight)}" r="3.5" fill="#f5f5f5" stroke="#080808" stroke-width="1.5"><title>${fmtDate(p.date)}: ${p.weight} ${data.units}</title></circle>`).join('');
+ const labels=points.map((p,i)=>points.length<=5||i===0||i===points.length-1||i===Math.floor((points.length-1)/2)?`<text x="${x(i)}" y="${H-12}" text-anchor="middle" fill="#8b8b8b" font-size="9">${fmtDate(p.date)}</text>`:'').join('');
+ const delta=points[points.length-1].weight-points[0].weight;
+ target.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:end;margin-bottom:8px"><div><div class="small muted">HEAVIEST COMPLETED SET</div><div style="font-size:25px;font-weight:900;margin-top:3px">${points[points.length-1].weight} <span class="small muted">${data.units}</span></div></div><div style="text-align:right"><div class="small muted">${points.length} logged sessions</div><div style="font-weight:800;margin-top:4px;color:${delta>0?'#a8f0bd':delta<0?'#ffb0b0':'#f5f5f5'}">${delta>0?'+':''}${Number(delta.toFixed(2))} ${data.units} overall</div></div></div>
+ <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(name)} weight progress graph" style="width:100%;height:auto;display:block;overflow:visible">${grid}<path d="${area}" fill="#f5f5f5" opacity=".06"/><path d="${line}" fill="none" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${dots}${labels}</svg>`;
+} 
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ironlog-backup.json';a.click();URL.revokeObjectURL(url)}
+function importData(e){let file=e.target.files[0];if(!file)return;let reader=new FileReader();reader.onload=()=>{try{let parsed=JSON.parse(reader.result);if(!parsed.schedule||!parsed.history)throw Error();data={...blank(),...parsed};save();render();alert('Backup imported.')}catch(err){alert('That file does not look like an Ironlog backup.')}};reader.readAsText(file);e.target.value=''}
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+render();
+</script>
+</body>
+</html>
